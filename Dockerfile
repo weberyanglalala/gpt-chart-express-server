@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install build dependencies for canvas
+# Install build dependencies for canvas and font support
 RUN apk add --no-cache \
     python3 \
     make \
@@ -14,7 +14,17 @@ RUN apk add --no-cache \
     pixman-dev \
     pangomm-dev \
     libjpeg-turbo-dev \
-    freetype-dev
+    freetype-dev \
+    # 添加字体支持
+    fontconfig-dev \
+    ttf-dejavu \
+    ttf-liberation \
+    # 如果需要中文支持，添加以下字体
+    font-noto-cjk \
+    font-wqy-zenhei
+
+# 更新字体缓存
+RUN fc-cache -fv
 
 # Copy package files
 COPY package*.json ./

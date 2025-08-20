@@ -11,19 +11,7 @@ app.use(express.json());
 
 app.post('/api/chart', async (req, res) => {
   try {
-    const { type, data } = req.body;
-
-    if (!type || !data) {
-      return res.status(400).json({
-        success: false,
-        errorMessage: 'Missing required parameters: type and data'
-      });
-    }
-
-    const options = {
-      type: type,
-      data: data,
-    };
+    const options = req.body;
 
     const vis = await render(options);
     const buffer = vis.toBuffer();
